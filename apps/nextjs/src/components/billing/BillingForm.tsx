@@ -77,7 +77,7 @@ export default function BillingFormComponent({ invoice, onSuccess }: BillingForm
   );
 
   const form = useForm<BillingForm>({
-    resolver: zodResolver(billingSchema),
+    // resolver: zodResolver(billingSchema),
     defaultValues: invoice
       ? {
           id: invoice.id,
