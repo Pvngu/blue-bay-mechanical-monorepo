@@ -1,0 +1,195 @@
+---
+import { Image } from 'astro:assets';
+import Heading from '@components/common/Heading.astro';
+import Badge from '@components/common/Badge.astro';
+
+import project1 from '@assets/images/placeholder.webp';
+import project2 from '@assets/images/placeholder.webp';
+import project3 from '@assets/images/placeholder.webp';
+import project4 from '@assets/images/placeholder.webp';
+import project5 from '@assets/images/placeholder.webp';
+
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image: ImageMetadata;
+  category: string;
+}
+
+// Project data array
+const projects: Project[] = [
+  {
+    id: 1,
+    title: "Commercial Office HVAC Installation",
+    description: "Complete HVAC system installation for a 10,000 sq ft office building with energy-efficient solutions.",
+    image: project1,
+    category: "Commercial"
+  },
+  {
+    id: 2,
+    title: "Residential Heat Pump Upgrade",
+    description: "Modern heat pump installation replacing outdated system, improving efficiency by 40%.",
+    image: project2,
+    category: "Residential"
+  },
+  {
+    id: 3,
+    title: "Industrial Ventilation System",
+    description: "Custom ventilation solution for manufacturing facility ensuring optimal air quality.",
+    image: project3,
+    category: "Industrial"
+  },
+  {
+    id: 4,
+    title: "Smart Thermostat Integration",
+    description: "Smart home HVAC controls installation with mobile app connectivity and scheduling.",
+    image: project4,
+    category: "Smart Home"
+  },
+  {
+    id: 5,
+    title: "Emergency AC Repair",
+    description: "24/7 emergency service restoring cooling system during peak summer demand.",
+    image: project5,
+    category: "Emergency"
+  }
+];
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<section class={`py-16 ${className || ''}`} id="projects">
+  <div>
+    <!-- Section Header -->
+    <div class="flex items-center justify-between mb-12">
+      <div class="flex-1">
+        <Badge class="mb-4">Latest Projects</Badge>
+        <Heading level={2} class="mb-0">
+          Our Latest HVAC<br />
+          Success Stories
+        </Heading>
+      </div>
+      
+      <!-- Navigation Arrows -->
+      <div class="flex gap-2">
+        <button
+          id="prev-btn"
+          class="w-12 h-12 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors shadow-sm"
+          aria-label="Previous projects"
+        >
+          <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+        </button>
+        <button
+          id="next-btn"
+          class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary-dark transition-colors shadow-sm"
+          aria-label="Next projects"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="relative overflow-hidden">
+      <div
+        id="projects-container"
+        class="flex gap-6 transition-transform duration-300 ease-in-out"
+        style="transform: translateX(0)"
+      >
+        {projects.map((project) => (
+          <div class="flex-none w-80 group">
+            <div class="relative bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+              <!-- Project Image -->
+              <div class="aspect-[3/4] overflow-hidden">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                />
+              </div>
+              
+              <!-- Overlay Content -->
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end">
+                <div class="p-6 text-white">
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-white/20 text-white backdrop-blur-sm">
+                      THIS PROJECT
+                    </span>
+                  </div>
+                  <h3 class="text-xl font-semibold mb-3">
+                    {project.title}
+                  </h3>
+                  <button class="inline-flex items-center gap-2 text-primary bg-white px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors font-medium">
+                    READ MORE
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const container = document.getElementById('projects-container') as HTMLElement;
+  const prevBtn = document.getElementById('prev-btn') as HTMLButtonElement;
+  const nextBtn = document.getElementById('next-btn') as HTMLButtonElement;
+  
+  let currentIndex = 0;
+  const itemWidth = 320; // 80 * 4 (w-80 = 320px)
+  const gap = 24; // gap-6 = 24px
+  const moveDistance = itemWidth + gap;
+  const totalItems = 5; // Update based on projects array length
+  const visibleItems = Math.floor(window.innerWidth / moveDistance);
+  const maxIndex = Math.max(0, totalItems - visibleItems);
+
+  function updateCarousel() {
+    const translateX = -(currentIndex * moveDistance);
+    container.style.transform = `translateX(${translateX}px)`;
+    
+    // Update button states
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex >= maxIndex;
+    
+    prevBtn.classList.toggle('opacity-50', currentIndex === 0);
+    nextBtn.classList.toggle('opacity-50', currentIndex >= maxIndex);
+  }
+
+  prevBtn.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateCarousel();
+    }
+  });
+
+  nextBtn.addEventListener('click', () => {
+    if (currentIndex < maxIndex) {
+      currentIndex++;
+      updateCarousel();
+    }
+  });
+
+  // Initialize carousel state
+  updateCarousel();
+
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    currentIndex = 0;
+    updateCarousel();
+  });
+</script>

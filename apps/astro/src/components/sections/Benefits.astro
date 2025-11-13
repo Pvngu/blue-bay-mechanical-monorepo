@@ -1,0 +1,67 @@
+---
+import Heading from "@components/common/Heading.astro";
+import P from "@components/common/P.astro";
+import Button from "@components/common/Button.astro";
+import Badge from "@components/common/Badge.astro";
+import { Image } from "astro:assets";
+
+interface Benefit {
+  title: string;
+  description: string;
+}
+
+const benefits: Benefit[] = [
+  {
+    title: "Fresh Air & Cold Efficiency",
+    description:
+      "Fast diagnostics and energy-smart maintenance keep your system delivering crisp comfort and clean airflow—day and night.",
+  },
+  {
+    title: "Craftsmanship You Can Feel",
+    description:
+      "Tailored installations and high-quality repairs built to last—whether it's your home, office, or commercial space.",
+  },
+];
+
+// Add placeholder images - replace with actual benefit images
+import placeholderImage from "@assets/images/placeholder.webp"; // Replace with actual image paths
+const benefitImages = [placeholderImage, placeholderImage]; // Add your actual images here
+---
+
+<section class="py-16" id="benefits">
+  <div class="text-center mb-16">
+    <Badge class="mb-6">Benefits</Badge>
+    <Heading level={2} class="max-w-3xl mx-auto">
+      Delivering Comfort with Precision, Reliability, and Lasting Value
+    </Heading>
+  </div>
+
+  <div class="space-y-16">
+    {
+      benefits.map((benefit, index) => (
+        <article class={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center lg:items-start gap-12 h-full`}>
+          <picture class="w-full">
+            <Image 
+              src={benefitImages[index]} 
+              alt={benefit.title}
+              class="rounded-xl aspect-[8/3] w-full object-cover"
+            />
+          </picture>
+          <div class="flex flex-col justify-between items-start size-full lg:w-auto max-w-[400px]">
+            <div class="flex-1">
+                <Heading level={3} class="text-2xl mb-2">
+                {benefit.title}
+                </Heading>
+                <P level={3} variant="secondary" class="mb-6">
+                {benefit.description}
+                </P>
+            </div>
+            <Button size="medium" class="mt-2">
+              Learn More
+            </Button>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>

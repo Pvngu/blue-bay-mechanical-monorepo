@@ -1,0 +1,150 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/images/bluebay-logo.svg';
+import Button from '@components/common/Button.astro';
+---
+
+<script>
+    // Add shadow to header when user scrolls 40px from top, with transition
+    if (typeof window !== 'undefined') {
+        window.addEventListener('DOMContentLoaded', () => {
+            const header = document.querySelector('header');
+            if (!header) return;
+            const onScroll = () => {
+                if (window.scrollY > 40) {
+                    header.classList.add('shadow-md');
+                } else {
+                    header.classList.remove('shadow-md');
+                }
+            };
+            window.addEventListener('scroll', onScroll);
+            onScroll(); // Initial check
+
+            // Set active nav link based on current URL
+            const navLinks = document.querySelectorAll('nav a');
+            const currentPath = window.location.pathname;
+            
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === currentPath || (href === '/' && currentPath === '/')) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Mobile menu toggle functionality
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    const expanded = menuButton.getAttribute('aria-expanded') === 'true';
+                    menuButton.setAttribute('aria-expanded', !expanded ? 'true' : 'false');
+                    mobileMenu.classList.toggle('hidden');
+                    mobileMenu.classList.toggle('flex');
+                    
+                    // Toggle hamburger icon to X
+                    document.querySelectorAll('.hamburger-line').forEach(line => {
+                        line.classList.toggle('active');
+                    });
+                    
+                    // Prevent scrolling when menu is open
+                    document.body.classList.toggle('overflow-hidden');
+                });
+                
+                // Close mobile menu when clicking on a link
+                const mobileLinks = mobileMenu.querySelectorAll('a');
+                mobileLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('flex');
+                        menuButton.setAttribute('aria-expanded', 'false');
+                        document.body.classList.remove('overflow-hidden');
+                        document.querySelectorAll('.hamburger-line').forEach(line => {
+                            line.classList.remove('active');
+                        });
+                    });
+                });
+            }
+        });
+    }
+</script>
+
+<header class="py-4 md:py-6 max-md:px-4 mb-10 sticky top-0 left-0 right-0 bg-[#F1F6F9] z-50 transition-shadow duration-300">
+    <div id="header" class="flex justify-between items-center">
+        <a href="/" class="z-20">
+            <Image src={logo} alt="Logo" width={160} />
+        </a>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-12">
+            <Button href="/" variant="link" size="medium" class="font-medium text-gray-700 hover:text-primary transition-colors duration-200">
+                Home
+            </Button>
+            <Button href="/about" variant="link" size="medium" class="font-medium text-gray-700 hover:text-primary transition-colors duration-200">
+                About Us
+            </Button>
+            <Button href="/services" variant="link" size="medium" class="font-medium text-gray-700 hover:text-primary transition-colors duration-200">
+                Services
+            </Button>
+        </nav>
+        
+        <div class="hidden md:block">
+            <Button size="medium" variant="primary">
+                Contact Us
+            </Button>
+        </div>
+        
+        <!-- Mobile menu button -->
+        <button id="mobile-menu-button" 
+                class="md:hidden z-20 p-2" 
+                aria-label="Toggle menu" 
+                aria-expanded="false"
+                aria-controls="mobile-menu">
+            <div class="hamburger w-6 h-5 flex flex-col justify-between">
+                <span class="hamburger-line block h-0.5 w-6 bg-gray-800 rounded-sm transition-all duration-300"></span>
+                <span class="hamburger-line block h-0.5 w-6 bg-gray-800 rounded-sm transition-all duration-300"></span>
+                <span class="hamburger-line block h-0.5 w-6 bg-gray-800 rounded-sm transition-all duration-300"></span>
+            </div>
+        </button>
+    </div>
+    
+    <!-- Mobile menu overlay -->
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-[#F1F6F9] z-10 flex-col items-center justify-center">
+        <nav class="flex flex-col items-center gap-8 text-lg">
+            <a href="/" class="text-gray-700 hover:text-primary transition-colors duration-200 font-medium">Home</a>
+            <a href="/about" class="text-gray-700 hover:text-primary transition-colors duration-200 font-medium">About Us</a>
+            <a href="/services" class="text-gray-700 hover:text-primary transition-colors duration-200 font-medium">Services</a>
+            <div class="mt-6">
+                <Button size="medium" variant="primary">
+                    Contact Us
+                </Button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<style>
+    nav a.active {
+        color: var(--color-primary);
+        font-weight: 600;
+    }
+    
+    .hamburger-line.active:nth-child(1) {
+        transform: translateY(10px) rotate(45deg);
+    }
+    
+    .hamburger-line.active:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .hamburger-line.active:nth-child(3) {
+        transform: translateY(-10px) rotate(-45deg);
+    }
+    
+    @media (max-width: 768px) {
+        #header {
+            padding-left: var(--space-4);
+            padding-right: var(--space-4);
+        }
+    }
+</style>

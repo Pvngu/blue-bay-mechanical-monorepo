@@ -1,0 +1,140 @@
+---
+import { Image } from 'astro:assets';
+import logo from '@assets/images/bluebay-logo.svg';
+import '../../styles/snowstorm.css';
+---
+
+<footer class="bg-blue-50 py-12">
+  <div class="container mx-auto px-4 md:px-6 lg:px-8">
+    <!-- Main Footer Content -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      
+      <!-- Company Info Column -->
+      <div class="space-y-4">
+        <Image 
+          src={logo} 
+          alt="Blue Bay Mechanical" 
+          class="h-12 w-auto"
+        />
+        <p class="text-gray-600 text-sm leading-relaxed">
+          Expert HVAC services for homes and businesses. Reliable heating and cooling for year-round comfort.
+        </p>
+      </div>
+
+      <!-- Services Column -->
+      <div>
+        <h3 class="font-semibold text-gray-900 mb-4">Services</h3>
+        <ul class="space-y-3">
+          <li>
+            <a href="/services/ac-repair" class="text-gray-600 hover:text-primary transition-colors text-sm">
+              AC Repair
+            </a>
+          </li>
+          <li>
+            <a href="/services/heating-repair" class="text-gray-600 hover:text-primary transition-colors text-sm">
+              Heating Repair
+            </a>
+          </li>
+          <li>
+            <a href="/services/installation" class="text-gray-600 hover:text-primary transition-colors text-sm">
+              System Installation
+            </a>
+          </li>
+          <li>
+            <a href="/services/maintenance" class="text-gray-600 hover:text-primary transition-colors text-sm">
+              Maintenance Service
+            </a>
+          </li>
+          <li>
+            <a href="/services/replacement" class="text-gray-600 hover:text-primary transition-colors text-sm">
+              System Replacement
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Quick Links Column -->
+      <div>
+        <h3 class="font-semibold text-gray-900 mb-4">Quick Links</h3>
+        <ul class="space-y-3">
+          <li>
+            <a href="/about" class="text-gray-600 hover:text-primary transition-colors text-sm">
+              About Us
+            </a>
+          </li>
+          <li>
+            <a href="/services" class="text-gray-600 hover:text-primary transition-colors text-sm">
+              Services
+            </a>
+          </li>
+          <li>
+            <a href="/contact" class="text-gray-600 hover:text-primary transition-colors text-sm">
+              Contact
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contact Us Column -->
+      <div>
+        <h3 class="font-semibold text-gray-900 mb-4">Contact Us</h3>
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="bg-gray-300 text-gray-600 px-2 py-1 rounded text-xs font-medium">📞</span>
+            <span class="text-gray-600 text-sm">(664) 240 3141</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="bg-gray-300 text-gray-600 px-2 py-1 rounded text-xs font-medium">✉️</span>
+            <a href="mailto:contact@bluebaymechanical.com" class="text-gray-600 hover:text-primary transition-colors text-sm">
+              contact@bluebaymechanical.com
+            </a>
+          </div>
+          <div class="text-gray-600 text-sm">
+            Address here
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Border -->
+    <hr class="border-gray-300 mb-6">
+
+    <!-- Copyright and Legal Links -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-gray-600 text-sm">
+        Copyright ©2025 Blue Bay Mechanical. All Rights Reserved
+      </p>
+      <div class="flex gap-4">
+        <a href="/terms" class="text-gray-600 hover:text-primary transition-colors text-sm">
+          Terms & Conditions
+        </a>
+        <span class="text-gray-400">|</span>
+        <a href="/privacy" class="text-gray-600 hover:text-primary transition-colors text-sm">
+          Privacy & Policy
+        </a>
+      </div>
+    </div>
+    <div class="flex flex-col items-start w-full mt-4 relative overflow-hidden">
+      <span class="text-primary text-lg font-medium ml-1 absolute">Airflow Perfected –</span>
+      <div id="refreshed-text" class="text-primary text-[clamp(1rem,16vw,16rem)] leading-none font-extrabold text-center w-full whitespace-nowrap">
+      REFRESHED
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Initialize snow effect when the component is mounted
+  document.addEventListener('DOMContentLoaded', () => {
+    import('../../scripts/snowstorm.js').then(module => {
+      const snowStorm = module.default;
+      const refreshedElement = document.getElementById('refreshed-text');
+      if (refreshedElement) {
+        // Add relative positioning if not already applied
+        refreshedElement.style.position = 'relative';
+        // Initialize the snowstorm on this element
+        snowStorm.init(refreshedElement);
+      }
+    });
+  });
+</script>

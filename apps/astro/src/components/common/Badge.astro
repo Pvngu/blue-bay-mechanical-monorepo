@@ -1,0 +1,15 @@
+---
+interface Props {
+    class?: string;
+}
+
+const { class: className = '', ...rest } = Astro.props;
+
+const baseClasses = 'inline-flex items-center justify-center px-4 py-1 bg-secondary text-white rounded-sm text-sm font-primary';
+
+const BadgeClasses = [baseClasses, className].join(' ');
+---
+
+<div class={BadgeClasses} {...rest}>
+    <slot />
+</div>

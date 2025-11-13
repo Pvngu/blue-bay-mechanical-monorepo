@@ -1,0 +1,16 @@
+
+> astro@0.0.1 dev
+> astro dev --host
+
+[32m✔[0m [33mConsole Ninja[0m extension is connected to [33mAstro[0m, see [36mhttps://tinyurl.com/2vt8jxzw[0m
+[2m15:27:04[22m [34m[types][39m Generated [2m1ms[22m
+[2m15:27:04[22m [34m[content][39m Syncing content
+[2m15:27:04[22m [34m[content][39m Synced content
+
+[42m[1m astro [22m[49m [32mv5.11.1[39m [2mready in[22m 274 [2mms[22m
+
+[2m┃[22m Local    [36mhttp://localhost:4321/[39m
+[2m┃[22m Network  [36mhttp://172.20.160.31:4321/[39m
+
+[2m15:27:04[22m [32mwatching for file changes...[39m
+[2m12:15:10[22m [34m[200][39m / [2m56ms[22m

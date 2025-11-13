@@ -1,0 +1,82 @@
+---
+import { Image } from 'astro:assets';
+import Heading from "@components/common/Heading.astro"
+import Button from "@components/common/Button.astro";
+import P from "@components/common/P.astro";
+
+import heroImage from "@assets/images/san-diego-bg.webp";
+import heroVideo from "@assets/videos/san-diego-bg.mp4";
+---
+
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden !max-w-screen">
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0 bg-black">
+        <video
+            src={heroVideo}
+            autoplay
+            muted
+            loop
+            playsinline
+            class="w-screen h-full object-cover object-center opacity-85"
+        ></video>
+        <!-- <Image 
+            src={heroImage}
+            alt="Hero Background"
+            class="w-screen h-full object-cover object-center opacity-75"
+        /> -->
+    </div>
+    
+    <!-- Content -->
+    <div class="relative z-10 text-center max-w-8xl mx-auto px-6">
+        <div class="space-y-6">
+            <!-- Main Heading -->
+            <div class="space-y-4">
+                <Heading level={1} class="font-semibold !md:font-bold text-white">
+                    SAN DIEGO AIR SOLUTIONS.
+                </Heading>
+                <Heading level={1} class="font-semibold !md:font-bold text-white leading-tight">
+                    KEEPING YOU COMFORTABLE.
+                </Heading>
+            </div>
+            
+            <!-- Subtitle -->
+            <P level={2} class="text-white">
+                CLEAN AIR. QUICK SERVICE. TIJUANA'S HVAC TEAM.
+            </P>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12">
+                <Button size="large" variant="primary" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-semibold min-w-48">
+                    GET A QUOTE
+                </Button>
+                <Button href="#services" size="large" variant="outline" class="border-2 border-white text-white hover:bg-white hover:text-primary px-8 py-4 text-lg font-semibold min-w-48 transition-all duration-300">
+                    SERVICES
+                </Button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Optional: Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+        <div class="w-6 h-10 border-2 border-white rounded-full flex justify-center">
+            <div class="w-1 h-3 bg-white rounded-full mt-2 animate-bounce"></div>
+        </div>
+    </div>
+</section>
+
+<style>
+    @keyframes bounce {
+        0%, 20%, 53%, 80%, 100% {
+            transform: translate3d(0,0,0);
+        }
+        40%, 43% {
+            transform: translate3d(0,-10px,0);
+        }
+        70% {
+            transform: translate3d(0,-5px,0);
+        }
+        90% {
+            transform: translate3d(0,-2px,0);
+        }
+    }
+</style>

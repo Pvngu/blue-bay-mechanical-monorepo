@@ -1,0 +1,36 @@
+---
+import Heading from '../common/Heading.astro';
+import P from '../common/P.astro';
+
+const stats = [
+    { value: '400+', label: 'Happy Clients' },
+    { value: '2+', label: 'Years of service' },
+    { value: '400+', label: 'Cleaning Projects' }
+];
+---
+
+<section class="py-12 md:py-16 lg:py-24">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        <Heading level={2} class="max-w-3xl mb-2 md:mb-0">
+            Expert HVAC Solutions for Year-Round Comfort and Reliability
+        </Heading>
+
+        <div class="h-full flex flex-col justify-center">
+            <P level={1} class="indent-8 md:indent-16 text-justify mb-6 md:mb-8">
+                At BlueBay Mechanical, we specialize in top-notch HVAC maintenance and installation services tailored to your needs. Our dedicated team ensures your home or business stays comfortable, no matter the season.
+            </P>
+            <div class="grid grid-cols-3 gap-6 md:gap-8 lg:gap-12">
+                {stats.map(({ value, label }) => (
+                    <div class="text-center">
+                        <div class="text-3xl md:text-4xl lg:text-3xl font-primary text-primary mb-2">
+                            {value}
+                        </div>
+                        <P variant="secondary" class="text-sm md:text-base">
+                            {label}
+                        </P>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>

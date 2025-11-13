@@ -1,0 +1,22 @@
+{
+  "name": "tecnm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "apps/*"
+  ],
+  "devDependencies": {
+    "turbo": "^2.5.8"
+  },
+  "packageManager": "npm@8.5.0",
+  "dependencies": {
+    "@tanstack/react-query": "^5.90.5"
+  }
+}

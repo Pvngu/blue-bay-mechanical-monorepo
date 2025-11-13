@@ -1,0 +1,52 @@
+---
+import Badge from '@components/common/Badge.astro';
+import Heading from '@components/common/Heading.astro';
+import P from '@components/common/P.astro';
+import Button from '@components/common/Button.astro';
+
+const faqs = [
+  {
+    question: "How can I contact you if I have a service issue?",
+    answer: "You can reach us 24/7 via phone, email, or our online request form. A certified technician will respond promptly to assess and resolve your HVAC needs."
+  },
+  {
+    question: "Do you offer emergency HVAC repairs?",
+    answer: "Yes! We provide fast, reliable emergency service for heating and cooling breakdowns. Our team is ready when your comfort can't wait."
+  },
+  {
+    question: "What types of systems do you service?",
+    answer: "We work on all major HVAC brands, including central air units, ductless mini-splits, furnaces, heat pumps, and smart thermostats."
+  },
+  {
+    question: "How often should I schedule maintenance?",
+    answer: "For optimal performance, we recommend seasonal tune-ups: once in spring for cooling systems, and once in fall for heating systems."
+  }
+];
+---
+
+<section class="px-4 md:px-6 lg:px-8 py-0 flex flex-col md:flex-row gap-12" id="faqs">
+  <div class="flex-1 flex flex-col py-12 md:py-24">
+    <Badge class="mb-4 self-start">Faqs</Badge>
+    <Heading level={2} class="mb-4">Your Comfort Matters.<br />Let’s Keep It Clear.</Heading>
+    <P level={2} variant="secondary" class="mb-8 max-w-lg">
+      Explore our most common questions about HVAC service, performance, and reliability—so you can stay informed and confident.
+    </P>
+    <Button href="#">
+      Learn More
+    </Button>
+  </div>
+  <div class="flex-1 flex flex-col gap-0 py-12 md:py-24">
+    <div class="divide-y divide-gray-200">
+      {faqs.map((faq, idx) => (
+        <details class="group py-8 px-0">
+          <summary class="flex items-center cursor-pointer select-none outline-none focus:ring-2 focus:ring-primary transition">
+            <span class="text-2xl font-primary font-light text-gray-400 w-16 flex-shrink-0">{String(idx + 1).padStart(2, '0')}</span>
+            <Heading level={4} class="ml-2 font-primary font-light text-gray-900">{faq.question}</Heading>
+            <span class="ml-auto text-3xl text-gray-400 transition group-open:rotate-45 group-open:text-primary">+</span>
+          </summary>
+          <P level={2} variant="secondary" class="mt-4 ml-16">{faq.answer}</P>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

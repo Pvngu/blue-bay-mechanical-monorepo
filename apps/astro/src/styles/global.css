@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+    --font-primary: 'Montserrat', sans-serif;
+
+    --color-primary: #024D82;
+    --color-primary-dark: #023A6D;
+    --color-primary-light: #E5F2FF;
+
+    --color-secondary: #457CA3;
+    --color-secondary-dark: #3A5B7A;
+    --color-secondary-light: #D9E8F3;
+}
+
+body {
+    @apply bg-[#F1F6F9]
+}
+
+#header, section {
+    @apply mx-auto px-5 md:px-12 lg:px-15 2xl:px-20 max-w-[1536px];
+}
+
+strong {
+    @apply font-normal;
+}
+
+html {
+  scroll-behavior: smooth;
+}

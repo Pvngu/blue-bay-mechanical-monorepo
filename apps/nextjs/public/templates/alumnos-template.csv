@@ -1,0 +1,4 @@
+carrera_id,matricula,nombre,apellido_paterno,apellido_materno,fecha_nacimiento,semestre,genero,modalidad
+1,20230001,Juan,Pérez,García,2005-05-10,3,masculino,presencial
+1,20230002,María,López,Martínez,2004-08-22,3,femenino,virtual
+2,20230003,Carlos,Rodríguez,Sánchez,2003-03-15,5,masculino,hibrida

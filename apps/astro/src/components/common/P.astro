@@ -1,0 +1,46 @@
+---
+interface Props {
+  level?: 1 | 2 | 3 | 4 | 5 | 6;
+  variant?: 'primary' | 'secondary' | 'muted';
+  class?: string;
+}
+
+const { 
+  level = 1,
+  variant = 'primary',
+  class: className = '',
+  ...rest 
+} = Astro.props;
+
+// Responsive font sizes using clamp
+const sizes = {
+  1: 'text-[clamp(1.125rem,2vw,1.25rem)]', // xl
+  2: 'text-[clamp(1rem,1.5vw,1.125rem)]',  // lg
+  3: 'text-[clamp(0.95rem,1vw,1rem)]',     // base
+  4: 'text-[clamp(0.875rem,0.8vw,0.95rem)]',// sm
+  5: 'text-[clamp(0.75rem,0.5vw,0.875rem)]',// xs
+  6: 'text-[clamp(0.75rem,0.5vw,0.875rem)]' // xs
+};
+
+const variantClasses = {
+  primary: 'text-gray-900',
+  secondary: 'text-gray-700',
+  muted: 'text-gray-500'
+};
+
+const baseClasses = 'font-primary leading-relaxed';
+
+const paragraphClasses = [
+  baseClasses,
+  sizes[level],
+  variantClasses[variant],
+  className
+].join(' ');
+---
+
+<p 
+  class={paragraphClasses}
+  {...rest}
+>
+  <slot />
+</p>

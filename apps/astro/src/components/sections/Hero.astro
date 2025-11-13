@@ -1,0 +1,27 @@
+---
+import { Image } from 'astro:assets';
+import Heading from "@components/common/Heading.astro"
+import Button from "@components/common/Button.astro";
+import P from "@components/common/P.astro";
+import exampleImage from "@assets/images/example.webp";
+---
+<section>
+    <div class="flex flex-col lg:flex-row justify-between mb-12 gap-8 lg:items-end">
+        <Heading class="max-w-xl">
+            Maximize <strong>System Efficiency</strong> and <strong>Indoor Air Quality</strong> Effortlessly
+        </Heading>
+        <div class="max-w-md flex flex-col gap-4">
+            <P level={3}>
+                With proactive maintenance, advanced diagnostics, and precision calibration, we help you breathe easier, reduce breakdowns, and extend your HVAC's lifespan.
+            </P>
+            <div>
+                <Button>
+                    Get a Quote
+                </Button>
+            </div>
+        </div>
+    </div>
+    <picture>
+        <Image src={exampleImage} alt="Example Image" class="w-full object-cover rounded-xl aspect-video" />
+    </picture>
+</section>

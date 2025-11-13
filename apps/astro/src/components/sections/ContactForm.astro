@@ -1,0 +1,198 @@
+---
+import Heading from "@components/common/Heading.astro";
+import P from "@components/common/P.astro";
+import Badge from "@components/common/Badge.astro";
+import Button from "@components/common/Button.astro";
+
+const INTERESTS = [
+  "AC Repair",
+  "AC Installation",
+  "Heating Repair",
+  "Duct Cleaning",
+  "Thermostat Setup",
+  "Maintenance",
+];
+
+// Replace with your actual Web3Forms access key
+const WEB3FORMS_ACCESS_KEY = "8e6cee4b-6f5e-4ce2-9c7d-8860454547d3";
+---
+
+<section class="py-12 mb-16" id="contact-form">
+  <div
+    class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start"
+  >
+    <!-- Left: Form -->
+    <div>
+      <Badge class="mb-4">Contact Us</Badge>
+      <Heading level={2} class="mb-4"
+        >Ready for Cleaner, Colder,<br />More Comfortable Air?</Heading
+      >
+      <P level={3} variant="secondary" class="mb-6">
+        Need expert HVAC service? BlueBay makes it easy—whether it’s tune-ups,
+        repairs, or installs. Submit your request and we’ll reach out right
+        away.
+      </P>
+      <form id="form" method="POST" class="space-y-4" autocomplete="off">
+        <input type="hidden" name="access_key" value={WEB3FORMS_ACCESS_KEY} />
+        <div>
+          <P level={3} variant="primary" class="mb-2">I’m Interested in...</P>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-4">
+            {
+              INTERESTS.map((interest, idx) => (
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="medium"
+                  class="w-full"
+                  id={`interest-btn-${idx}`}
+                  data-idx={idx}
+                >
+                  {interest}
+                </Button>
+              ))
+            }
+          </div>
+          <input type="hidden" name="interest" id="interest" />
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            name="first_name"
+            required
+            placeholder="First Name"
+            class="px-4 py-3 rounded-md bg-blue-50 text-gray-900 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+          <input
+            name="last_name"
+            required
+            placeholder="Last Name"
+            class="px-4 py-3 rounded-md bg-blue-50 text-gray-900 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            name="email"
+            type="email"
+            required
+            placeholder="Email Address"
+            class="px-4 py-3 rounded-md bg-blue-50 text-gray-900 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+          <input
+            name="phone"
+            required
+            placeholder="Phone Number"
+            class="px-4 py-3 rounded-md bg-blue-50 text-gray-900 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+        <div class="grid grid-cols-1">
+          <input
+            name="street"
+            required
+            placeholder="Street"
+            class="px-4 py-3 rounded-md bg-blue-50 text-gray-900 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input
+            name="city"
+            required
+            placeholder="City"
+            class="px-4 py-3 rounded-md bg-blue-50 text-gray-900 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+          <input
+            name="postcode"
+            required
+            placeholder="Postcode"
+            class="px-4 py-3 rounded-md bg-blue-50 text-gray-900 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+        <div class="grid grid-cols-1">
+          <textarea
+            name="message"
+            required
+            placeholder="Let's Talk About Your Idea"
+            rows="3"
+            class="px-4 py-3 rounded-md bg-blue-50 text-gray-900 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
+          ></textarea>
+        </div>
+        <Button type="submit" variant="primary" size="large" block class="mt-2"
+          >Send Now</Button
+        >
+        <div id="result" class="mt-2 text-sm text-primary"></div>
+      </form>
+      <script is:inline>
+        const form = document.getElementById("form");
+        const result = document.getElementById("result");
+        form?.addEventListener("submit", function (e) {
+          const formData = new FormData(form);
+          e.preventDefault();
+          const object = Object.fromEntries(formData);
+          const json = JSON.stringify(object);
+          result.innerHTML = "Please wait...";
+          fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: json,
+          })
+            .then(async (response) => {
+              let json = await response.json();
+              result.innerHTML = json.message;
+            })
+            .catch((error) => {
+              result.innerHTML = "Something went wrong!";
+            })
+            .then(function () {
+              form.reset();
+              setTimeout(() => {
+                result.style.display = "none";
+              }, 3000);
+            });
+        });
+
+        const INTERESTS = [
+        "AC Repair",
+        "AC Installation",
+        "Heating Repair",
+        "Duct Cleaning",
+        "Thermostat Setup",
+        "Maintenance",
+        ];
+
+        // Interest button single-select logic
+        INTERESTS.forEach((_, idx) => {
+          const btn = document.getElementById(`interest-btn-${idx}`);
+          btn?.addEventListener("click", () => {
+            // Set hidden input value
+            document.getElementById('interest').value = INTERESTS[idx];
+            // Update button variants
+            INTERESTS.forEach((_, i) => {
+              const b = document.getElementById(`interest-btn-${i}`);
+              if (b) {
+                if (i === idx) {
+                  b.classList.remove("border-2", "border-primary", "text-primary", "hover:bg-primary", "hover:text-white");
+                  b.classList.add("bg-primary", "hover:bg-primary-dark", "text-white");
+                } else {
+                  b.classList.remove("bg-primary", "hover:bg-primary-dark", "text-white");
+                  b.classList.add("border-2", "border-primary", "text-primary", "hover:bg-primary", "hover:text-white");
+                }
+              }
+            });
+          });
+        });
+      </script>
+    </div>
+    <!-- Right: Google Map -->
+    <div class="rounded-lg overflow-hidden shadow-md h-full">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d839.215418531185!2d-117.1672661!3d32.7163032!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80d954a979e8710f%3A0x67425fe8bdf316!2s402%20W%20Broadway%20Suite%20400%2C%20San%20Diego%2C%20CA%2092101%2C%20USA!5e0!3m2!1sen!2smx!4v1753171965000!5m2!1sen!2smx"
+        width="100%"
+        height="100%"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>

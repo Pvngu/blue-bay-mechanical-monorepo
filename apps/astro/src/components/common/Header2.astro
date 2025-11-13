@@ -1,0 +1,191 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../../assets/images/bluebay-logo.svg';
+import Button from '@components/common/Button.astro';
+---
+
+<script>
+    // Add shadow to header when user scrolls 40px from top, with transition
+    if (typeof window !== 'undefined') {
+        window.addEventListener('DOMContentLoaded', () => {
+            const header = document.querySelector('header');
+            const mobileMenuButton = document.querySelector('#mobile-menu-button');
+            const mobileMenu = document.querySelector('#mobile-menu');
+            const mobileMenuOverlay = document.querySelector('#mobile-menu-overlay');
+            const body = document.body;
+            
+            if (!header) return;
+            
+            const onScroll = () => {
+                if (window.scrollY > 40) {
+                    header.classList.add('shadow-lg', 'bg-primary');
+                    header.classList.remove('bg-transparent');
+                } else {
+                    header.classList.remove('shadow-lg', 'bg-primary');
+                    header.classList.add('bg-transparent');
+                }
+            };
+            window.addEventListener('scroll', onScroll);
+            onScroll(); // Initial check
+
+            // Set active nav link based on current URL
+            const navLinks = document.querySelectorAll('nav a, #mobile-menu a');
+            const currentPath = window.location.pathname;
+            
+            navLinks.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === currentPath || (href === '/' && currentPath === '/')) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Mobile menu toggle
+            const toggleMobileMenu = () => {
+                if (!mobileMenu || !mobileMenuOverlay || !mobileMenuButton) return;
+                
+                const isOpen = mobileMenu.classList.contains('translate-x-0');
+                if (isOpen) {
+                    mobileMenu.classList.remove('translate-x-0');
+                    mobileMenu.classList.add('-translate-x-full');
+                    mobileMenuOverlay.classList.add('opacity-0', 'pointer-events-none');
+                    mobileMenuButton.classList.remove('active');
+                    body.classList.remove('overflow-hidden');
+                } else {
+                    mobileMenu.classList.remove('-translate-x-full');
+                    mobileMenu.classList.add('translate-x-0');
+                    mobileMenuOverlay.classList.remove('opacity-0', 'pointer-events-none');
+                    mobileMenuButton.classList.add('active');
+                    body.classList.add('overflow-hidden');
+                }
+            };
+
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', toggleMobileMenu);
+            }
+
+            if (mobileMenuOverlay) {
+                mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+            }
+
+            // Close mobile menu when clicking nav links
+            const mobileNavLinks = document.querySelectorAll('#mobile-menu a');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', toggleMobileMenu);
+            });
+        });
+    }
+</script>
+
+<header class="py-4 md:px-6 lg:px-8 fixed top-0 left-0 right-0 bg-transparent z-50 transition-all duration-300 ease-in-out">
+    <div id="header" class="flex justify-between items-center max-w-7xl mx-auto">
+        <a href="/" class="z-10">
+            <Image src={logo} alt="Blue Bay Mechanical Logo" class="h-10 md:h-12 w-auto filter brightness-0 invert" />
+        </a>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-8 lg:gap-12">
+            <a href="/" class="text-white hover:text-blue-200 transition-colors duration-200 font-medium">Home</a>
+            <a href="#about" class="text-white hover:text-blue-200 transition-colors duration-200 font-medium">About Us</a>
+            <a href="#services" class="text-white hover:text-blue-200 transition-colors duration-200 font-medium">Services</a>
+        </nav>
+        
+        <!-- Desktop CTA Button -->
+        <div class="hidden md:block">
+            <Button size="medium" variant="secondary" class="bg-blue-600 hover:bg-blue-700 text-white border-blue-600">
+                Get A Quote
+            </Button>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button 
+            id="mobile-menu-button"
+            class="md:hidden z-10 flex flex-col justify-center items-center w-8 h-8 space-y-1"
+            aria-label="Toggle mobile menu"
+        >
+            <span class="w-6 h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
+            <span class="w-6 h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
+            <span class="w-6 h-0.5 bg-white transition-all duration-300 ease-in-out"></span>
+        </button>
+    </div>
+</header>
+
+<!-- Mobile Menu Overlay -->
+<div 
+    id="mobile-menu-overlay" 
+    class="fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out md:hidden"
+></div>
+
+<!-- Mobile Menu -->
+<div 
+    id="mobile-menu" 
+    class="fixed top-0 left-0 h-full w-80 max-w-[85vw] bg-primary z-50 transform -translate-x-full transition-transform duration-300 ease-in-out md:hidden"
+>
+    <div class="flex flex-col h-full pt-20 px-6">
+        <!-- Phone Number -->
+        <div class="mb-8 pb-6 border-b border-blue-400/30">
+            <a 
+                href="tel:+1-619-555-0123" 
+                class="flex items-center gap-3 text-white hover:text-blue-200 transition-colors duration-200"
+            >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                </svg>
+                <div>
+                    <div class="text-sm text-blue-200">Call us now</div>
+                    <div class="font-semibold text-lg">(619) 555-0123</div>
+                </div>
+            </a>
+        </div>
+        
+        <!-- Navigation Links -->
+        <nav class="flex flex-col space-y-6 flex-1">
+            <a href="/" class="text-white hover:text-blue-200 transition-colors duration-200 text-xl font-medium py-2">
+                Home
+            </a>
+            <a href="#about" class="text-white hover:text-blue-200 transition-colors duration-200 text-xl font-medium py-2">
+                About Us
+            </a>
+            <a href="#services" class="text-white hover:text-blue-200 transition-colors duration-200 text-xl font-medium py-2">
+                Services
+            </a>
+        </nav>
+        
+        <!-- Get Quote Button -->
+        <div class="mt-8 mb-8">
+            <Button size="large" variant="secondary" class="w-full bg-blue-600 hover:bg-blue-700 text-white border-blue-600 text-lg py-4">
+                Get A Quote
+            </Button>
+        </div>
+    </div>
+</div>
+
+<style>
+    nav a.active,
+    #mobile-menu a.active {
+        color: #E5F2FF;
+        font-weight: 600;
+    }
+    
+    /* Hamburger menu animation */
+    #mobile-menu-button.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    #mobile-menu-button.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    #mobile-menu-button.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+    
+    /* Prevent scroll when mobile menu is open */
+    body.overflow-hidden {
+        overflow: hidden;
+    }
+    
+    /* Mobile menu shadow */
+    #mobile-menu {
+        box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
+    }
+</style>

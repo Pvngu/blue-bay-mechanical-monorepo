@@ -1,0 +1,24 @@
+/**
+ * Snowstorm CSS for Blue Bay Mechanical
+ * Styles for the snowfall animation
+ */
+
+.snowstorm-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.snowflake {
+  color: white;
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.7));
+}

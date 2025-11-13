@@ -1,0 +1,114 @@
+---
+import Heading from '@components/common/Heading.astro';
+import P from '@components/common/P.astro';
+import Button from '@components/common/Button.astro';
+import Badge from '@components/common/Badge.astro';
+
+interface Service {
+  number: string;
+  title: string;
+  description: string;
+}
+
+const services: Service[] = [
+  {
+    number: "01",
+    title: "Air Conditioning Repair",
+    description: "Quick fixes for faulty AC units are high-demand—especially during hot seasons. It's one of the first things people call about."
+  },
+  {
+    number: "02", 
+    title: "Heating System Repair",
+    description: "Equally critical during cold months. Broken furnaces and heat pumps need fast, reliable attention."
+  },
+  {
+    number: "03",
+    title: "Seasonal Maintenance", 
+    description: "This keeps systems efficient and extends their lifespan. It's preventive, cost-saving, and ideal for upselling service plans."
+  },
+  {
+    number: "04",
+    title: "System Installation",
+    description: "New installs are big-ticket and high-impact. Whether for renovations or upgrades, this is a top priority service."
+  }
+];
+---
+
+<section class="py-16 md:py-20 lg:py-24" id="services">
+  <div>
+    <!-- Header Section -->
+    <div class="flex flex-col lg:flex-row items-center lg:justify-between gap-8 mb-12 md:mb-16 lg:mb-20">
+      <!-- Left side - Badge and Heading -->
+      <div class="lg:flex-1">
+        <Badge class='mb-4'>
+            Our Services
+        </Badge>
+        
+        <Heading level={2} class="mb-0 max-w-xl">
+          Stylish, durable HVAC solutions for all needs.
+        </Heading>
+      </div>
+      
+      <!-- Right side - Description -->
+      <div class="lg:flex-1 lg:max-w-lg">
+        <P level={4} class="text-gray-600">
+          We provide comprehensive HVAC services for residential and commercial clients. Our experts ensure your heating and cooling systems run efficiently, maintaining year-round comfort.
+        </P>
+      </div>
+    </div>
+
+    <!-- Services Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-12 md:mb-16">
+      {services.map((service) => (
+        <div class="group relative">
+          <!-- Background Pattern -->
+          <div class="absolute left-0 top-0 w-32 h-32 opacity-5">
+            <div class="w-full h-full bg-gradient-to-br from-primary to-secondary rounded-2xl transform rotate-12"></div>
+          </div>
+          
+          <!-- Service Content -->
+          <div class="relative z-10 p-6 lg:p-8">
+            <!-- Service Number and Arrow -->
+            <div class="flex items-start justify-between mb-6">
+              <span class="text-6xl md:text-7xl font-light text-gray-200 leading-none">
+                {service.number}
+              </span>
+              <button class="w-12 h-12 bg-primary hover:bg-primary-dark text-white rounded-full flex items-center justify-center transition-all duration-200 group-hover:scale-110">
+                <svg 
+                  class="w-5 h-5" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path 
+                    stroke-linecap="round" 
+                    stroke-linejoin="round" 
+                    stroke-width="2" 
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
+                </svg>
+              </button>
+            </div>
+            
+            <!-- Service Title -->
+            <Heading level={2} class="mb-4">
+              {service.title}
+            </Heading>
+            
+            <!-- Service Description -->
+            <P level={3} class="text-gray-600 leading-relaxed">
+              {service.description}
+            </P>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- View All Services Button -->
+    <div class="text-center">
+      <Button variant="primary">
+        View All Services
+      </Button>
+    </div>
+  </div>
+</section>
